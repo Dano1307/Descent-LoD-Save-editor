@@ -1,0 +1,4 @@
+- Se si aggiunge un'arma al salvataggio, la si equipaggia e poi la si rimuove dal salvataggio l'interfaccia in gioco per equipaggiare quell'arma si glitcha
+
+- Se si segna una quest attualmente in corco come completata di bugga l'interfaccia delle quest (diventa impossibile ottenere la ricompensa delle quest)
+    TODO: Quindi quando si segna una quest come completata bisogna anche toglierla dalla lista delle quest in corso

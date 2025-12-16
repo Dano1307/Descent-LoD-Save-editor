@@ -1,0 +1,274 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/dark-theme.css">
+        <link rel="stylesheet" href="css/GUI.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="script/consts.js"></script>
+        <script src="script/main.js"></script>
+        <script src="script/GUI_Builder.js"></script>
+        <script src="script/dataManager.js"></script>
+    </head>
+
+    <body onload="setup()">
+        <form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
+            <fieldset>
+                <h2>Select save file</h2>
+                <input type='file' id='fileinput'>
+                <button type="button" id='btnLoad' class="blue-button" onclick='loadFile();'>Load</button>
+            
+                <select id="selLanguage" name="language" class="blue-button" onchange="changeLanguage()">
+                    <option value="eng">English</option>
+                    <option value="ita">Italiano</option>
+                </select>
+
+                <br>
+                <a href="html/instructions.html" target="_blank" style="target-new: tab;">(How to use)</a>
+            </fieldset>
+        </form>
+
+        <h4 id="partyName">Party name: </h4>
+
+        <ul id="navigationBar">
+            <li data-id="COMMON">Common</li>
+            <li data-id="HERO_BRYNN">Brynn</li>
+            <li data-id="HERO_SYRUS">Syrus</li>
+            <li data-id="HERO_GALADEN">Galaden</li>
+            <li data-id="HERO_VAERIX">Vaerix</li>
+            <li data-id="HERO_KEHLI">Kehli</li>
+            <li data-id="HERO_CHANCE">Chance</li>
+        </ul>
+
+        
+
+        <div id="saveData">
+            <div id="commonData">
+                <div class="table-container">
+                    <h1>Armors</h1>
+                    <table id="armors">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h1>Trinkets</h1>
+                    <table id="trinkets">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table id="consumables">
+                        <h1>Consumables</h1>
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h1 id="brynnTitle" class="heroTitle" data-id="HERO_BRYNN">Brynn</h1>
+            <div id="brynnData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="brynnWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="brynnSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="brynnFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h1 id="syrusTitle" class="heroTitle" data-id="HERO_SYRUS">Syrus</h1>
+            <div id="syrusData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="syrusWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="syrusSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="syrusFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <h1 id="galadenTitle" class="heroTitle" data-id="HERO_GALADEN">Galaden</h1>
+            <div id="galadenData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="galadenWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="galadenSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="galadenFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h1 id="vaerixTitle" class="heroTitle" data-id="HERO_VAERIX">Vaerix</h1>
+            <div id="vaerixData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="vaerixWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="vaerixSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="vaerixFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h1 id="kehliTitle" class="heroTitle" data-id="HERO_KEHLI">Kehli</h1>
+            <div id="kehliData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="kehliWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="kehliSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="kehliFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h1 id="chanceTitle" class="heroTitle" data-id="HERO_CHANCE">Chance</h1>
+            <div id="chanceData">
+                <div class="table-container">
+                    <h2>weapons</h2>
+                    <table id="chanceWeapons">
+                        <tr>
+                            <th>ID</th>
+                            <th>BASE</th>
+                            <th>UPGRADED</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>skills</h2>
+                    <table id="chanceSkills">
+                        <tr>
+                            <th>Skill</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h2>feats</h2>
+                    <table id="chanceFeats">
+                        <tr>
+                            <th>Feat</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <button type="button" id="btnSave" class="blue-button" onclick="downloadUpdatedSaveFile()">Get the new save file</button>
+    </body>
+</html>
