@@ -1,4 +1,0 @@
--AvailableItemIds serve a ???
-
--ItemInventory è l'insieme più importante. Se un oggetto vi viene aggiunto esso comparirà nell'inventario in gioco
-    N.B. l'ordine degli oggetti in ItemInventory si rispecchia nell'ordine in cui compaiono all'inerno dell'inventario in gioco
