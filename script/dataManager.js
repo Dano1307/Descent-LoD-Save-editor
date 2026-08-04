@@ -55,7 +55,29 @@ function removeFromRealCompletedFeats(targetFeatId){
 /*----------------------------------------------------------------------------------------- */
 
 
+/*------------------------------------UPDATE FUNCTIONS------------------------------------- */
+// Update gold value into the save file
+function updateGold(){
+    let newGoldValue = document.getElementById("goldQuantity").value;
+    completeSave.GameSceneData.GameState.Gold =newGoldValue;
+}
 
+// Update the specified material quantity into the save file
+function updateMaterialQuantity(targetMaterialId, newValue){
+    let craftingMaterials = completeSave.GameSceneData.GameState.CraftingMaterials;
+    // Find the index of the target material into the materials array contained in the save-file
+    let targetMaterialIndex = craftingMaterials.findIndex( material => material.Id === targetMaterialId);
+    
+    if(targetMaterialIndex != -1){
+        // Update the target material value into the save-file
+        craftingMaterials[targetMaterialIndex].Qty = newValue;  
+    }
+    else{
+        console.error("Cannot find material with id "+targetMaterialId);
+    }
+    
+}
+/*----------------------------------------------------------------------------------------- */
 
 
 

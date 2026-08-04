@@ -1,4 +1,4 @@
-// Constants for heros id
+// Hero IDs
 const BRYNN_ID = "HERO_BRYNN"
 const SYRUS_ID = "HERO_SYRUS"
 const GALADEN_ID = "HERO_GALADEN"
@@ -13,7 +13,24 @@ const FEAT_TYPE = "FEAT"
 const ARMOR_TYPE = "ARMOR"
 const TRINKET_TYPE = "TRINKET"
 const CSM_TYPE = "CSM"
+const CRAFTING_MATERIAL_TYPE = "CRAFTING_MATERIAL"
 
+/**
+ * Lamdba function for defining items array.
+ * @param {*} prefix 
+ * @param {*} n 
+ * @returns array of `n` elements, each element is structured in this way: [prefix]_[i].
+ *          (i.e. "ARMOR_1", where `prefix` is "ARMOR" and `i` is 1)
+ */
+const range = (prefix, n) => {
+    const result = new Array(n); // Array of n elements
+
+    for(let i = 0; i < n; i++){
+        result[i] = `${prefix}_${i+1}`
+    }
+
+    return result;
+}
 
 const allArmors = [
     "ARMOR_1",
@@ -33,10 +50,20 @@ const allArmors = [
     "ARMOR_15",
     "ARMOR_16",
     "ARMOR_17",
-    "ARMOR_18"
+    "ARMOR_18",
+    "ARMOR_19",
+    "ARMOR_20",
+    "ARMOR_21",
+    "ARMOR_22",
+    "ARMOR_23",
+    "ARMOR_24",
+    "ARMOR_25",
+    "ARMOR_26",
+    "ARMOR_27"
 ]
 
-
+/* ATTENTION: "TRINKET14_ID" doesn't exists. For some reason they skipped it
+    and instead continued up to id 21*/
 const allTrinkets = [
     "TRINKET1_ID",
     "TRINKET2_ID",
@@ -48,9 +75,18 @@ const allTrinkets = [
     "TRINKET8_ID",
     "TRINKET9_ID",
     "TRINKET10_ID",
-    "TRINKET11_ID"
+    "TRINKET11_ID",
+    "TRINKET12_ID",
+    "TRINKET13_ID",
+    // ATTENTION: "TRINKET14_ID" doesn't exists
+    "TRINKET15_ID",
+    "TRINKET16_ID",
+    "TRINKET17_ID",
+    "TRINKET18_ID",
+    "TRINKET19_ID",
+    "TRINKET20_ID",
+    "TRINKET21_ID"
 ]
-
 
 const allConsumables = [
     // Common consumables
@@ -60,17 +96,43 @@ const allConsumables = [
     "CSM_FOCUS_POTION",
     "CSM_VIGOR_POTION",
     "CSM_ANTIDOTE_POTION",
+    "CSM_GLITTERDUST",
     // Rare consumables
     "CSM_CRIMSON_POTION",
     "CSM_WARRIOR_BREATH",
     "CSM_MAGE_DUST",
     "CSM_ROGUE_SWEAT",
     "CSM_SMOKE_BOMB",
-    "CSM_GUARDIAN_POTION"
+    "CSM_GUARDIAN_POTION",
+    "CSM_WHIRLWIND",
+    "CSM_EFFICACIOUS",
+    "CSM_STALWART"
 ]
 
 
-const allHerosData = {
+const allCraftingMaterials = [
+    // physical materials
+    "MAT_CLOTH",
+    "MAT_MINERALS",
+    "MAT_BONE",
+    "MAT_LEATHER",
+    "MAT_METAL",
+    "MAT_HERBS",
+    "MAT_CURIOS",
+    // elemental materials
+    "MAT_VIGOS",
+    "MAT_ANEMOS",
+    "MAT_FORTUNOS",
+    "MAT_UMBROS",
+    "MAT_AQUOS",
+    "MAT_MORTOS",
+    "MAT_TOXOS",
+    "MAT_LUMOS",
+    "MAT_TERROS",
+    "MAT_IGNOS"
+]
+
+const allHeroesData = {
     "COMMON": {
         name:{
             ita:"Comuni",
@@ -79,61 +141,30 @@ const allHerosData = {
         GUI_divId: "commonData",
     },
 
-    "HERO_BRYNN": {
+    [BRYNN_ID]: {
         name:{
             ita:"Brynn",
             eng:"Brynn"
         },
-        /* N.B. Gli id delle armi (WEAPON_PART_A) vanno da 1 a 3 (eccetto brynn che possiede anche la "SWORD_ANCESTRAL")
-        Invece quelli dei potenziamenti (WEAPON_PART_B, WEAPON_PART_C) vanno da 0 a 3
+        /* N.B. Gli id delle armi (WEAPON_PART_A) vanno da 1 a 3 per il gioco base (eccetto Brynn che possiede anche la "SWORD_ANCESTRAL") + da 4 a 5 per l'espansione
+        Invece quelli dei potenziamenti (WEAPON_PART_B, WEAPON_PART_C) vanno da 0 a 3 per il gioco base + da 4 a 5 per l'espansione.
         */
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_SWORD_1",    
-            "WEAPON_PART_A_SWORD_2",
-            "WEAPON_PART_A_SWORD_3",
-            "WEAPON_PART_A_SWORD_ANCESTRAL",
-            "WEAPON_PART_A_WARHAMMER_1",
-            "WEAPON_PART_A_WARHAMMER_2",
-            "WEAPON_PART_A_WARHAMMER_3",
-            // Parts 1
-            "WEAPON_PART_B_SWORD_1",    
-            "WEAPON_PART_B_SWORD_2",
-            "WEAPON_PART_B_SWORD_3",
-            "WEAPON_PART_B_WARHAMMER_1",
-            "WEAPON_PART_B_WARHAMMER_2",
-            "WEAPON_PART_B_WARHAMMER_3",
-            // Parts 2
-            "WEAPON_PART_C_SWORD_1",    
-            "WEAPON_PART_C_SWORD_2",
-            "WEAPON_PART_C_SWORD_3",
-            "WEAPON_PART_C_WARHAMMER_1",
-            "WEAPON_PART_C_WARHAMMER_2",
-            "WEAPON_PART_C_WARHAMMER_3"
+            // Weapons (example "WEAPON_PART_A_SWORD_1", "WEAPON_PART_A_WARHAMMER_1")
+            ...range("WEAPON_PART_A_SWORD", 5),
+            "WEAPON_PART_A_SWORD_ANCESTRAL",    // Brynn extra weapon
+            ...range("WEAPON_PART_A_WARHAMMER", 5),
+            // Parts 1 (example "WEAPON_PART_B_SWORD_1", "WEAPON_PART_B_WARHAMMER_1")
+            ...range("WEAPON_PART_B_SWORD", 5),
+            ...range("WEAPON_PART_B_WARHAMMER", 5),
+            // Parts 2 (example "WEAPON_PART_C_SWORD_1", "WEAPON_PART_C_WARHAMMER_1")
+            ...range("WEAPON_PART_C_SWORD", 5),
+            ...range("WEAPON_PART_C_WARHAMMER", 5)
         ],
-        allSkills: [
-            "SKILL_BRYNN_1",
-            "SKILL_BRYNN_2",
-            "SKILL_BRYNN_3",
-            "SKILL_BRYNN_4",
-            "SKILL_BRYNN_5",
-            "SKILL_BRYNN_6",
-            "SKILL_BRYNN_7"
-        ],
-        allFeats: [
-            "FEAT_BRYNN_1",
-            "FEAT_BRYNN_2",
-            "FEAT_BRYNN_3",
-            "FEAT_BRYNN_4",
-            "FEAT_BRYNN_5",
-            "FEAT_BRYNN_6",
-            "FEAT_BRYNN_7",
-            "FEAT_BRYNN_8",
-            "FEAT_BRYNN_9",
-            "FEAT_BRYNN_10",
-            "FEAT_BRYNN_11",
-            "FEAT_BRYNN_12"
-        ],
+        // example "SKILL_BRYNN_1"
+        allSkills: range("SKILL_BRYNN", 11),
+        // example "FEAT_BRYNN_1"
+        allFeats: range("FEAT_BRYNN", 20),
         tableIds: {
             weaponTableId: "brynnWeapons",
             skillTableId: "brynnSkills",
@@ -155,57 +186,26 @@ const allHerosData = {
         GUI_titleId: "brynnTitle"
     },
 
-    "HERO_SYRUS": {
+    [SYRUS_ID]: {
         name:{
             ita:"Syrus",
             eng:"Syrus"
         },
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_STAFF_1",    
-            "WEAPON_PART_A_STAFF_2",
-            "WEAPON_PART_A_STAFF_3",
-            "WEAPON_PART_A_WAND_1",
-            "WEAPON_PART_A_WAND_2",
-            "WEAPON_PART_A_WAND_3",
-            // Parts 1
-            "WEAPON_PART_B_STAFF_1",    
-            "WEAPON_PART_B_STAFF_2",
-            "WEAPON_PART_B_STAFF_3",
-            "WEAPON_PART_B_WAND_1",
-            "WEAPON_PART_B_WAND_2",
-            "WEAPON_PART_B_WAND_3",
-            // Parts 2
-            "WEAPON_PART_C_STAFF_1",    
-            "WEAPON_PART_C_STAFF_2",
-            "WEAPON_PART_C_STAFF_3",
-            "WEAPON_PART_C_WAND_1",
-            "WEAPON_PART_C_WAND_2",
-            "WEAPON_PART_C_WAND_3"
+            // Weapons (example "WEAPON_PART_A_STAFF_1", "WEAPON_PART_A_WAND_1")
+            ...range("WEAPON_PART_A_STAFF", 5),
+            ...range("WEAPON_PART_A_WAND", 5),
+            // Parts 1 (example "WEAPON_PART_B_STAFF_1", "WEAPON_PART_B_WAND_1")
+            ...range("WEAPON_PART_B_STAFF", 5),
+            ...range("WEAPON_PART_B_WAND", 5),
+            // Parts 2 (example "WEAPON_PART_C_STAFF_1", "WEAPON_PART_C_WAND_1")
+            ...range("WEAPON_PART_C_STAFF", 5),
+            ...range("WEAPON_PART_C_WAND", 5)
         ],
-        allSkills: [
-            "SKILL_SYRUS_1",
-            "SKILL_SYRUS_2",
-            "SKILL_SYRUS_3",
-            "SKILL_SYRUS_4",
-            "SKILL_SYRUS_5",
-            "SKILL_SYRUS_6",
-            "SKILL_SYRUS_7"
-        ],
-        allFeats: [
-            "FEAT_SYRUS_1",
-            "FEAT_SYRUS_2",
-            "FEAT_SYRUS_3",
-            "FEAT_SYRUS_4",
-            "FEAT_SYRUS_5",
-            "FEAT_SYRUS_6",
-            "FEAT_SYRUS_7",
-            "FEAT_SYRUS_8",
-            "FEAT_SYRUS_9",
-            "FEAT_SYRUS_10",
-            "FEAT_SYRUS_11",
-            "FEAT_SYRUS_12"
-        ],
+        // example "SKILL_SYRUS_1"
+        allSkills: range("SKILL_SYRUS", 11),
+        // example "FEAT_SYRUS_1"
+        allFeats: range("FEAT_SYRUS", 20),
         tableIds: {
             weaponTableId: "syrusWeapons",
             skillTableId: "syrusSkills",
@@ -227,57 +227,26 @@ const allHerosData = {
         GUI_titleId: "syrusTitle"
     },
 
-    "HERO_GALADEN": {
+    [GALADEN_ID]: {
         name:{
             ita:"Galaden",
             eng:"Galaden"
         },
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_DUAL_BLADES_1",    
-            "WEAPON_PART_A_DUAL_BLADES_2",
-            "WEAPON_PART_A_DUAL_BLADES_3",
-            "WEAPON_PART_A_BOW_1",
-            "WEAPON_PART_A_BOW_2",
-            "WEAPON_PART_A_BOW_3",
-            // Parts 1
-            "WEAPON_PART_B_DUAL_BLADES_1",    
-            "WEAPON_PART_B_DUAL_BLADES_2",
-            "WEAPON_PART_B_DUAL_BLADES_3",
-            "WEAPON_PART_B_BOW_1",
-            "WEAPON_PART_B_BOW_2",
-            "WEAPON_PART_B_BOW_3",
-            // Parts 2
-            "WEAPON_PART_C_DUAL_BLADES_1",    
-            "WEAPON_PART_C_DUAL_BLADES_2",
-            "WEAPON_PART_C_DUAL_BLADES_3",
-            "WEAPON_PART_C_BOW_1",
-            "WEAPON_PART_C_BOW_2",
-            "WEAPON_PART_C_BOW_3"
+            // Weapons (example "WEAPON_PART_A_DUAL_BLADES_1", "WEAPON_PART_A_BOW_1")
+            ...range("WEAPON_PART_A_DUAL_BLADES", 5),
+            ...range("WEAPON_PART_A_BOW", 5),
+            // Parts 1 (example "WEAPON_PART_B_DUAL_BLADES_1", "WEAPON_PART_B_BOW_1")
+            ...range("WEAPON_PART_B_DUAL_BLADES", 5),
+            ...range("WEAPON_PART_B_BOW", 5),
+            // Parts 2 (example "WEAPON_PART_C_DUAL_BLADES_1", "WEAPON_PART_C_BOW_1")
+            ...range("WEAPON_PART_C_DUAL_BLADES", 5),
+            ...range("WEAPON_PART_C_BOW", 5),
         ],
-        allSkills: [
-            "SKILL_GALADEN_1",
-            "SKILL_GALADEN_2",
-            "SKILL_GALADEN_3",
-            "SKILL_GALADEN_4",
-            "SKILL_GALADEN_5",
-            "SKILL_GALADEN_6",
-            "SKILL_GALADEN_7"
-        ],
-        allFeats: [
-            "FEAT_GALADEN_1",
-            "FEAT_GALADEN_2",
-            "FEAT_GALADEN_3",
-            "FEAT_GALADEN_4",
-            "FEAT_GALADEN_5",
-            "FEAT_GALADEN_6",
-            "FEAT_GALADEN_7",
-            "FEAT_GALADEN_8",
-            "FEAT_GALADEN_9",
-            "FEAT_GALADEN_10",
-            "FEAT_GALADEN_11",
-            "FEAT_GALADEN_12"
-        ],
+        // example "SKILL_GALADEN_1"
+        allSkills: range("SKILL_GALADEN", 11),
+        // example "FEAT_GALADEN_1"
+        allFeats: range("FEAT_GALADEN", 20),
         tableIds: {
             weaponTableId: "galadenWeapons",
             skillTableId: "galadenSkills",
@@ -298,58 +267,27 @@ const allHerosData = {
         GUI_divId: "galadenData",
         GUI_titleId: "galadenTitle"
     },
-
-    "HERO_VAERIX": {
+    
+    [VAERIX_ID]: {
         name:{
             ita:"Vaerix",
             eng:"Vaerix"
         },
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_WARBELL_1",    
-            "WEAPON_PART_A_WARBELL_2",
-            "WEAPON_PART_A_WARBELL_3",
-            "WEAPON_PART_A_SPEAR_1",
-            "WEAPON_PART_A_SPEAR_2",
-            "WEAPON_PART_A_SPEAR_3",
-            // Parts 1
-            "WEAPON_PART_B_WARBELL_1",    
-            "WEAPON_PART_B_WARBELL_2",
-            "WEAPON_PART_B_WARBELL_3",
-            "WEAPON_PART_B_SPEAR_1",
-            "WEAPON_PART_B_SPEAR_2",
-            "WEAPON_PART_B_SPEAR_3",
-            // Parts 2
-            "WEAPON_PART_C_WARBELL_1",    
-            "WEAPON_PART_C_WARBELL_2",
-            "WEAPON_PART_C_WARBELL_3",
-            "WEAPON_PART_C_SPEAR_1",
-            "WEAPON_PART_C_SPEAR_2",
-            "WEAPON_PART_C_SPEAR_3"
+            // Weapons (example "WEAPON_PART_A_WARBELL_1", "WEAPON_PART_A_SPEAR_1")
+            ...range("WEAPON_PART_A_WARBELL", 5),
+            ...range("WEAPON_PART_A_SPEAR", 5),
+            // Parts 1 (example "WEAPON_PART_B_WARBELL_1", "WEAPON_PART_B_SPEAR_1")
+            ...range("WEAPON_PART_B_WARBELL", 5),
+            ...range("WEAPON_PART_B_SPEAR", 5),
+            // Parts 2 (example "WEAPON_PART_C_WARBELL_1", "WEAPON_PART_C_SPEAR_1")
+            ...range("WEAPON_PART_C_WARBELL", 5),
+            ...range("WEAPON_PART_C_SPEAR", 5)
         ],
-        allSkills: [
-            "SKILL_VAERIX_1",
-            "SKILL_VAERIX_2",
-            "SKILL_VAERIX_3",
-            "SKILL_VAERIX_4",
-            "SKILL_VAERIX_5",
-            "SKILL_VAERIX_6",
-            "SKILL_VAERIX_7"
-        ],
-        allFeats: [
-            "FEAT_VAERIX_1",
-            "FEAT_VAERIX_2",
-            "FEAT_VAERIX_3",
-            "FEAT_VAERIX_4",
-            "FEAT_VAERIX_5",
-            "FEAT_VAERIX_6",
-            "FEAT_VAERIX_7",
-            "FEAT_VAERIX_8",
-            "FEAT_VAERIX_9",
-            "FEAT_VAERIX_10",
-            "FEAT_VAERIX_11",
-            "FEAT_VAERIX_12"
-        ],
+        // example "SKILL_VAERIX_1"
+        allSkills: range("SKILL_VAERIX", 11),
+        // example "FEAT_VAERIX_1"
+        allFeats: range("FEAT_VAERIX", 20),
         tableIds: {
             weaponTableId: "vaerixWeapons",
             skillTableId: "vaerixSkills",
@@ -370,59 +308,27 @@ const allHerosData = {
         GUI_divId: "vaerixData",
         GUI_titleId: "vaerixTitle" 
     },
-
-    "HERO_KEHLI": {
+    
+    [KEHLI_ID]: {
         name:{
             ita:"Kehli",
             eng:"Kehli"
         },
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_HAMMER_1",    
-            "WEAPON_PART_A_HAMMER_2",
-            "WEAPON_PART_A_HAMMER_3",
-            "WEAPON_PART_A_CROSSBOW_1",
-            "WEAPON_PART_A_CROSSBOW_2",
-            "WEAPON_PART_A_CROSSBOW_3",
-            // Parts 1
-            "WEAPON_PART_B_HAMMER_1",    
-            "WEAPON_PART_B_HAMMER_2",
-            "WEAPON_PART_B_HAMMER_3",
-            "WEAPON_PART_B_CROSSBOW_1",
-            "WEAPON_PART_B_CROSSBOW_2",
-            "WEAPON_PART_B_CROSSBOW_3",
-            // Parts 2
-            "WEAPON_PART_C_HAMMER_1",    
-            "WEAPON_PART_C_HAMMER_2",
-            "WEAPON_PART_C_HAMMER_3",
-            "WEAPON_PART_C_CROSSBOW_1",
-            "WEAPON_PART_C_CROSSBOW_2",
-            "WEAPON_PART_C_CROSSBOW_3"
+            // Weapons (example "WEAPON_PART_A_HAMMER_1", "WEAPON_PART_A_CROSSBOW_1")
+            ...range("WEAPON_PART_A_HAMMER", 5),
+            ...range("WEAPON_PART_A_CROSSBOW", 5),
+            // Parts 1 (example "WEAPON_PART_B_HAMMER_1", "WEAPON_PART_B_CROSSBOW_1")
+            ...range("WEAPON_PART_B_HAMMER", 5),
+            ...range("WEAPON_PART_B_CROSSBOW", 5),
+            // Parts 2 (example "WEAPON_PART_C_HAMMER_1", "WEAPON_PART_C_CROSSBOW_1")
+            ...range("WEAPON_PART_C_HAMMER", 5),
+            ...range("WEAPON_PART_C_CROSSBOW", 5)
         ],
-        allSkills: [
-            "SKILL_KEHLI_1",
-            "SKILL_KEHLI_2",
-            "SKILL_KEHLI_3",
-            "SKILL_KEHLI_4",
-            "SKILL_KEHLI_5",
-            "SKILL_KEHLI_6",
-            "SKILL_KEHLI_7"
-        ],
-        allFeats: [
-            "FEAT_KEHLI_1",
-            "FEAT_KEHLI_2",
-            "FEAT_KEHLI_3",
-            "FEAT_KEHLI_4",
-            "FEAT_KEHLI_5",
-            "FEAT_KEHLI_6",
-            "FEAT_KEHLI_7",
-            "FEAT_KEHLI_8",
-            "FEAT_KEHLI_9",
-            "FEAT_KEHLI_10",
-            "FEAT_KEHLI_11",
-            "FEAT_KEHLI_12"
-            
-        ],
+        // example "SKILL_KEHLI_1"
+        allSkills: range("SKILL_KEHLI", 11),
+        // example "FEAT_KEHLI_1"
+        allFeats: range("FEAT_KEHLI", 20),
         tableIds: {
             weaponTableId: "kehliWeapons",
             skillTableId: "kehliSkills",
@@ -443,58 +349,27 @@ const allHerosData = {
         GUI_divId: "kehliData",
         GUI_titleId: "kehliTitle"
     },
-
-    "HERO_CHANCE": {
+    
+    [CHANCE_ID]: {
         name:{
             ita:"Sorte",
             eng:"Chance"
         },
         allWeapons: [
-            // Weapons
-            "WEAPON_PART_A_GAUNTLET_1",    
-            "WEAPON_PART_A_GAUNTLET_2",
-            "WEAPON_PART_A_GAUNTLET_3",
-            "WEAPON_PART_A_KNIVES_1",
-            "WEAPON_PART_A_KNIVES_2",
-            "WEAPON_PART_A_KNIVES_3",
-            // Parts 1
-            "WEAPON_PART_B_GAUNTLET_1",    
-            "WEAPON_PART_B_GAUNTLET_2",
-            "WEAPON_PART_B_GAUNTLET_3",
-            "WEAPON_PART_B_KNIVES_1",
-            "WEAPON_PART_B_KNIVES_2",
-            "WEAPON_PART_B_KNIVES_3",
-            // Parts 2
-            "WEAPON_PART_C_GAUNTLET_1",    
-            "WEAPON_PART_C_GAUNTLET_2",
-            "WEAPON_PART_C_GAUNTLET_3",
-            "WEAPON_PART_C_KNIVES_1",
-            "WEAPON_PART_C_KNIVES_2",
-            "WEAPON_PART_C_KNIVES_3"
+            // Weapons (example "WEAPON_PART_A_GAUNTLET_1", "WEAPON_PART_A_KNIVES_1")
+            ...range("WEAPON_PART_A_GAUNTLET", 5),
+            ...range("WEAPON_PART_A_KNIVES", 5),
+            // Parts 1 (example "WEAPON_PART_B_GAUNTLET_1", "WEAPON_PART_B_KNIVES_1")
+            ...range("WEAPON_PART_B_GAUNTLET", 5),
+            ...range("WEAPON_PART_B_KNIVES", 5),
+            // Parts 2 (example "WEAPON_PART_C_GAUNTLET_1", "WEAPON_PART_C_KNIVES_1")
+            ...range("WEAPON_PART_C_GAUNTLET", 5),
+            ...range("WEAPON_PART_C_KNIVES", 5)
         ],
-        allSkills: [
-            "SKILL_CHANCE_1",
-            "SKILL_CHANCE_2",
-            "SKILL_CHANCE_3",
-            "SKILL_CHANCE_4",
-            "SKILL_CHANCE_5",
-            "SKILL_CHANCE_6",
-            "SKILL_CHANCE_7"
-        ],
-        allFeats: [
-            "FEAT_CHANCE_1",
-            "FEAT_CHANCE_2",
-            "FEAT_CHANCE_3",
-            "FEAT_CHANCE_4",
-            "FEAT_CHANCE_5",
-            "FEAT_CHANCE_6",
-            "FEAT_CHANCE_7",
-            "FEAT_CHANCE_8",
-            "FEAT_CHANCE_9",
-            "FEAT_CHANCE_10",
-            "FEAT_CHANCE_11",
-            "FEAT_CHANCE_12",
-        ],
+        // example "SKILL_CHANCE_1"
+        allSkills: range("SKILL_CHANCE", 11),
+        // example "FEAT_CHANCE_1"
+        allFeats: range("FEAT_CHANCE", 20),
         tableIds: {
             weaponTableId: "chanceWeapons",
             skillTableId: "chanceSkills",

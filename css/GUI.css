@@ -38,6 +38,7 @@ input[type="checkbox"]{
 	margin-top: 10px;
 	margin-bottom: 10px;
 	display: flex;
+  flex-flow: wrap;
 }
 
 .table-container{
@@ -47,11 +48,23 @@ input[type="checkbox"]{
     margin-right: auto;
 }
 
+.quantity-input-container,
 .checkbox-container{
 	text-align: center;
 }
 
+.quantity-input{
+    max-width: 70px;
+    text-align: center;
+    padding: 5;
+
+}
+
 .item-image{
+	max-width: 110px;
+}
+
+.item-text-image{
 	max-width: 400px;
 }
 

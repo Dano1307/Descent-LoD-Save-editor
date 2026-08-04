@@ -9,7 +9,7 @@
  */
 var completeSave;
 
-// Language
+// Default language
 var language = "eng";
 
 
@@ -84,6 +84,10 @@ function buildCompleteGUI(){
     // Getting party name
     showPartyName();
 
+    // Filling the gold GUI
+    buildGoldGUI();
+    // Filling the crafting-materials GUI
+    buildCraftingMaterialGUI();
     // Filling the armors GUI
     buildArmorGUI();
     // Filling the trinkets GUI
@@ -127,20 +131,19 @@ function changeLanguage(){
     let navigationBar = document.getElementById("navigationBar");
     let list = navigationBar.getElementsByTagName('li');
     for(li of list) {
-        li.textContent = allHerosData[li.dataset.id].name[language];
+        li.textContent = allHeroesData[li.dataset.id].name[language];
     }
     // Change hero title names
     let heroTitles = document.getElementsByClassName("heroTitle");
     for(title of heroTitles) {
-        title.textContent = allHerosData[title.dataset.id].name[language];
+        title.textContent = allHeroesData[title.dataset.id].name[language];
     }
 
     // Refresh GUI
     buildCompleteGUI()
 }
 
-
-// PROVA
+// Setup function for the navigation bar
 function setup(){
     // Adding listener to navigation bar
     let navigationBar = document.getElementById("navigationBar");
@@ -151,27 +154,27 @@ function setup(){
     };
 }
 
-//PROVA
+// Function triggered while navigating through the navigation bar
 function switchGUI(event){
     let li = event.target;
     let heroId = li.dataset.id;
     let targetDiv;
     let targetTitle;
     // divs
-    let commonDiv = document.getElementById(allHerosData.COMMON.GUI_divId)
-    let brynnDiv = document.getElementById(allHerosData.HERO_BRYNN.GUI_divId)
-    let syrusDiv = document.getElementById(allHerosData.HERO_SYRUS.GUI_divId)
-    let galadenDiv = document.getElementById(allHerosData.HERO_GALADEN.GUI_divId)
-    let vaerixDiv = document.getElementById(allHerosData.HERO_VAERIX.GUI_divId)
-    let kehliDiv = document.getElementById(allHerosData.HERO_KEHLI.GUI_divId)
-    let chanceDiv = document.getElementById(allHerosData.HERO_CHANCE.GUI_divId)
+    let commonDiv = document.getElementById(allHeroesData.COMMON.GUI_divId)
+    let brynnDiv = document.getElementById(allHeroesData.HERO_BRYNN.GUI_divId)
+    let syrusDiv = document.getElementById(allHeroesData.HERO_SYRUS.GUI_divId)
+    let galadenDiv = document.getElementById(allHeroesData.HERO_GALADEN.GUI_divId)
+    let vaerixDiv = document.getElementById(allHeroesData.HERO_VAERIX.GUI_divId)
+    let kehliDiv = document.getElementById(allHeroesData.HERO_KEHLI.GUI_divId)
+    let chanceDiv = document.getElementById(allHeroesData.HERO_CHANCE.GUI_divId)
     // titles
-    let brynnTitle = document.getElementById(allHerosData.HERO_BRYNN.GUI_titleId)
-    let syrusTitle = document.getElementById(allHerosData.HERO_SYRUS.GUI_titleId)
-    let galadenTitle = document.getElementById(allHerosData.HERO_GALADEN.GUI_titleId)
-    let vaerixTitle = document.getElementById(allHerosData.HERO_VAERIX.GUI_titleId)
-    let kehliTitle = document.getElementById(allHerosData.HERO_KEHLI.GUI_titleId)
-    let chanceTitle = document.getElementById(allHerosData.HERO_CHANCE.GUI_titleId)
+    let brynnTitle = document.getElementById(allHeroesData.HERO_BRYNN.GUI_titleId)
+    let syrusTitle = document.getElementById(allHeroesData.HERO_SYRUS.GUI_titleId)
+    let galadenTitle = document.getElementById(allHeroesData.HERO_GALADEN.GUI_titleId)
+    let vaerixTitle = document.getElementById(allHeroesData.HERO_VAERIX.GUI_titleId)
+    let kehliTitle = document.getElementById(allHeroesData.HERO_KEHLI.GUI_titleId)
+    let chanceTitle = document.getElementById(allHeroesData.HERO_CHANCE.GUI_titleId)
 
     // Making all GUIs invisible
     //divs
