@@ -77,14 +77,38 @@ function buildGoldGUI(){
  * NOTE: this function creates a unique GUI since crafting materials are not unlockables but "stackables"/"lootables"
  *      So, we need a GUI to modify the quantity of each material
 */
+// TODO: add all the missing craft mat to the list
 function buildCraftingMaterialGUI(){
     let tableCraftingMaterials = document.getElementById("craftingMaterials");
 
     // Getting the list of available crafting materials
     let availableCraftingMaterialsObj = completeSave.GameSceneData.GameState.CraftingMaterials;
 
+    /* 
+        NOTE: some materials could be missing in the save file, so we have to manually add all the materials one by one:
+            if a material is present in the save file, set it to the quantity stored in the save file
+            otherwise, set its quantity to 0
+    */
+    // Creating a list of ALL crafting materials
+    let allCraftingMaterialsObj = []
+    // For each possibile crafting material
+    allCraftingMaterials.forEach( materialId => {
+        // If (for this material) there is a quantity specified in the save file, lets get it
+        if (availableCraftingMaterialsObj.some(availableMat => availableMat.Id === materialId)) {
+            // Get the available material object
+            let availableMat = availableCraftingMaterialsObj.find(availableMat => availableMat.Id === materialId)
+            allCraftingMaterialsObj.push({"Id":materialId, "Qty":availableMat.Qty})
+        }
+        // Otherwise, set the quantity to 0
+        else {
+            allCraftingMaterialsObj.push({"Id":materialId, "Qty":0})
+        }
+    })
+
+    console.log(allCraftingMaterialsObj)
+
     // Build the table containing all crafting material with their available quantities
-    buildTable(tableCraftingMaterials, availableCraftingMaterialsObj, (craftingMaterialObj) => {
+    buildTable(tableCraftingMaterials, allCraftingMaterialsObj, (craftingMaterialObj) => {
         // Adding a new table row for the current material
         let tr = document.createElement("tr");
         let tdMaterialName = document.createElement("td");
